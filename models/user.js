@@ -25,6 +25,15 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Avatar is required"],
     },
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+      required: [true, "Verify token is required"],
+      default: "",
+    },
   },
   { versionKey: false, timestamps: true }
 );
@@ -34,6 +43,15 @@ const joiRegisterSchema = Joi.object({
   email: Joi.string().email().required(),
 });
 
+const joiVerifyEmailSchema = Joi.object({
+  email: Joi.string().email().required().messages({
+    "string.base": "Email должен быть строкой.",
+    "string.email": "Email должен быть валидным email адресом.",
+    "string.empty": "Email является обязательным полем.",
+    "any.required": "Email является обязательным полем.",
+  }),
+});
+
 const joiLoginSchema = Joi.object({
   password: Joi.string().min(8).required(),
   email: Joi.string().email().required(),
@@ -41,4 +59,9 @@ const joiLoginSchema = Joi.object({
 
 const User = model("user", userSchema);
 
-module.exports = { User, joiRegisterSchema, joiLoginSchema };
+module.exports = {
+  User,
+  joiVerifyEmailSchema,
+  joiRegisterSchema,
+  joiLoginSchema,
+};
