@@ -1,4 +1,4 @@
-const { Unauthorized } = require("http-errors");
+const CreateError = require("http-errors");
 const { User } = require("../../models");
 require("dotenv").config();
 const { BASE_URL } = process.env;
@@ -6,13 +6,15 @@ const sendEmail = require("../../utils/sendEmail");
 
 const resendVerificationEmail = async (req, res) => {
   const { email } = req.body;
-  console.log(email);
+  if (!email) {
+    return res.status(400).json({ message: "missing required field email" });
+  }
   const user = await User.findOne({ email });
   if (!user) {
-    throw new Unauthorized("Email not found");
+    throw CreateError(401, "Email not found");
   }
   if (user.verify) {
-    throw new Unauthorized("Email already verified");
+    throw CreateError(400, "Verification has already been passed");
   }
   const verifyEmail = {
     to: email,
@@ -21,6 +23,6 @@ const resendVerificationEmail = async (req, res) => {
   };
 
   await sendEmail(verifyEmail);
-  res.json({ message: "Successfully resubmitted verification email" });
+  res.status(200).json({ message: "Verification email sent" });
 };
 module.exports = resendVerificationEmail;

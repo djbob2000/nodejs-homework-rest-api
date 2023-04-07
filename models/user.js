@@ -45,10 +45,8 @@ const joiRegisterSchema = Joi.object({
 
 const joiVerifyEmailSchema = Joi.object({
   email: Joi.string().email().required().messages({
-    "string.base": "Email должен быть строкой.",
-    "string.email": "Email должен быть валидным email адресом.",
-    "string.empty": "Email является обязательным полем.",
-    "any.required": "Email является обязательным полем.",
+    "string.email": "Email is not valid",
+    "any.required": "missing required field email",
   }),
 });
 
