@@ -1,3 +1,13 @@
-const { User, joiRegisterSchema, joiLoginSchema } = require("./user");
+const {
+  User,
+  joiRegisterSchema,
+  joiLoginSchema,
+  joiVerifyEmailSchema,
+} = require("./user");
 
-module.exports = { User, joiRegisterSchema, joiLoginSchema };
+module.exports = {
+  User,
+  joiRegisterSchema,
+  joiLoginSchema,
+  joiVerifyEmailSchema,
+};

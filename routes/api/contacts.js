@@ -31,21 +31,11 @@ router
 router
   .route("/:contactId")
   .get(getByIdController)
-  .put(
-    checkAuthMiddleware,
-    validateContactBody,
-    validateContactId,
-    putContactController
-  )
+  .put(validateContactBody, validateContactId, putContactController)
   .delete(validateContactId, removeContactController);
 
 router
   .route("/:contactId/favorite")
-  .patch(
-    checkAuthMiddleware,
-    validateContactId,
-    validateFavorite,
-    updateStatusContact
-  );
+  .patch(validateContactId, validateFavorite, updateStatusContact);
 
 module.exports = router;

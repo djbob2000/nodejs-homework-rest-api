@@ -1,9 +1,6 @@
-// const fs = require("fs").promises;
 const Joi = require("joi");
 const catchAsync = require("../utils/catchAsync");
 const Contact = require("../models/contactsModel");
-
-// const CONTACTS_FILE_PATH = "./models/contacts.json";
 
 const validateContactBody = (req, res, next) => {
   const schema = Joi.object({
@@ -14,7 +11,6 @@ const validateContactBody = (req, res, next) => {
     phone: Joi.string().required(),
     favorite: Joi.boolean(),
   });
-  console.log(req.body);
   const { error } = schema.validate(req.body, { abortEarly: false });
   if (error) {
     const { details } = error;
